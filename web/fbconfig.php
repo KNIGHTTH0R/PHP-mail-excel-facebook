@@ -16,7 +16,7 @@ use Facebook\HttpClients\FacebookHttpable;
 // init app with app id and secret
 FacebookSession::setDefaultApplication( '307509092945291','3f12b5853b84ac765c9d56ecf2e95c43' );
 // login helper with redirect_uri
-    $helper = new FacebookRedirectLoginHelper('https://up-excel.herokuapp.com/' );
+    $helper = new FacebookRedirectLoginHelper('https://up-excel.herokuapp.com/fbconfig.php' );
 try {
   $session = $helper->getSessionFromRedirect();
 } catch( FacebookRequestException $ex ) {
@@ -24,6 +24,9 @@ try {
 } catch( Exception $ex ) {
   // When validation fails or other local issues
 }
+
+var_dump($session);
+
 // see if we have a session
 if ( isset( $session ) ) {
   // graph api request for user data
@@ -39,9 +42,9 @@ if ( isset( $session ) ) {
         $_SESSION['FULLNAME'] = $fbfullname;
 	    $_SESSION['EMAIL'] =  $femail;
     /* ---- header location after session ----*/
-  header("Location: index.php");
+  // header("Location: index.php");
 } else {
-  $loginUrl = $helper->getLoginUrl();
- header("Location: ".$loginUrl);
+ //  $loginUrl = $helper->getLoginUrl();
+ // header("Location: ".$loginUrl);
 }
 ?>
