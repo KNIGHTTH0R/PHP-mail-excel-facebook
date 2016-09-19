@@ -26,8 +26,8 @@ try {
 }
 
 
-$session = new Facebook\FacebookSession('ce487547326fe035108288bbf266a51d');
-$request = new Facebook\FacebookRequest($session, 'GET', '/me');
+$session = new FacebookSession('ce487547326fe035108288bbf266a51d');
+$request = new FacebookRequest($session, 'GET', '/me');
 $response = $request->execute();
 var_dump($response);
 
