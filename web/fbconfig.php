@@ -14,7 +14,7 @@ use Facebook\Entities\AccessToken;
 use Facebook\HttpClients\FacebookCurlHttpClient;
 use Facebook\HttpClients\FacebookHttpable;
 // init app with app id and secret
-FacebookSession::setDefaultApplication( '1278728428826760','ba7fd17d0d56804cc061f0f6df3e438c' );
+FacebookSession::setDefaultApplication( '307509092945291','3f12b5853b84ac765c9d56ecf2e95c43' );
 // login helper with redirect_uri
     $helper = new FacebookRedirectLoginHelper('https://up-excel.herokuapp.com/' );
 try {
