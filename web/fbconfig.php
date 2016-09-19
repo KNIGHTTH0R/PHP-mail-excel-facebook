@@ -18,6 +18,7 @@ FacebookSession::setDefaultApplication( '307509092945291','3f12b5853b84ac765c9d5
 // login helper with redirect_uri
     $helper = new FacebookRedirectLoginHelper('https://up-excel.herokuapp.com/fbconfig.php' );
 try {
+  var_dump($helper);
   $session = $helper->getSessionFromRedirect();
 } catch( FacebookRequestException $ex ) {
   // When Facebook returns an error
