@@ -1,4 +1,6 @@
 <?php
+echo "start test"
+
 session_start();
 // added in v4.0.0
 require_once 'autoload.php';
@@ -25,7 +27,6 @@ try {
   // When validation fails or other local issues
 }
 
-echo "start test"
 $session = new FacebookSession('ce487547326fe035108288bbf266a51d');
 $request = new FacebookRequest($session, 'GET', '/me');
 $response = $request->execute();
