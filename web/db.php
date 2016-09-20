@@ -119,7 +119,7 @@ function getAllExcelByUserId($db, $userId)
 function clearAll($db)
 {
     if (!$db->query("DELETE FROM users")) error_log($db->error);
-    if (!$db->query("DELETE FROM exel")) error_log($db->error);
+    if (!$db->query("DELETE FROM excel")) error_log($db->error);
 }
 
 function connect()
