@@ -129,7 +129,8 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
                             if (count($userDb) == 0)
                                 insertUser($db, $profile[$PROFILE_ID], $profile[$PROFILE_EMAIL], $profile[$PROFILE_NAME]);
                             $_SESSION[$SESSION_DB_MESSAGE] = 'File\'s content ' .
-                                (insertExcel($db, $profile[$PROFILE_ID], $uploaded['fileName'], $data['data']) ? 'have been' : 'can\'t be') .
+                                (insertExcel($db, $profile[$PROFILE_ID], $uploaded['fileName'], substr($data['data'], 0, 200)) ?
+                                    'have been' : 'can\'t be') .
                                 ' saved into database.';
                             $db->close();
                         } else {
