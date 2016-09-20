@@ -1,19 +1,18 @@
 <?php
-echo '<h3>Hi, $profile["name"]</h3>';
-echo '<br/>';
+echo '<h3>Hi, ' . $profile['name'] . '</h3>';
 echo '<a href="logout.php">Logout</a><br/>';
 
-if (isset($profile['id']) && isset($profile['email']) && isset($profile['name'])) die('No profile information');
-
-$user = array(
-    'id' => $profile['id'],
-    'email' => $profile['email'],
-    'user_name' => $profile['name']
-);
+$PROFILE_ID = 'id';
+$PROFILE_EMAIL = 'email';
+$PROFILE_NAME = 'name';
 $SESSION_EXCEL_MESSAGE = 'excel_message';
 $SESSION_UPLOAD_MESSAGE = 'upload_message';
 $SESSION_DB_MESSAGE = 'db_message';
 $SESSION_MAIL_MESSAGE = 'mail_message';
+if (!(isset($profile[$PROFILE_ID]) || isset($profile['email']) || isset($profile['name'])))
+    die('No profile information');
+
+$user = array();
 
 include 'PHPExcel/PHPExcel/IOFactory.php';
 require 'PHPMailer/PHPMailerAutoload.php';
@@ -122,11 +121,11 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
                         $_SESSION[$SESSION_UPLOAD_MESSAGE] = 'Excel file have been uploaded';
                         $db = connect();
                         if ($db) {
-                            $userDb = getUserById($db, $user['id']);
+                            $userDb = getUserById($db, $profile[$PROFILE_ID]);
                             if (count($userDb) == 0)
-                                insertUser($db, $user['id'], $user['email'], $user['user_name']);
+                                insertUser($db, $profile[$PROFILE_ID], $profile[$PROFILE_EMAIL], $profile[$PROFILE_NAME]);
                             $_SESSION[$SESSION_DB_MESSAGE] = 'File\'s content ' .
-                                (insertExcel($db, $user['id'], $data['data']) ? 'have been' : 'can\'t be') .
+                                (insertExcel($db, $profile[$PROFILE_ID], $data['data']) ? 'have been' : 'can\'t be') .
                                 ' saved into database.';
                         } else {
                             $_SESSION[$SESSION_DB_MESSAGE] = 'Can\'t connect to database.';
