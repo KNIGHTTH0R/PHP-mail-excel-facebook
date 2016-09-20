@@ -165,7 +165,7 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
     } else {
         $_SESSION[$SESSION_EXCEL_MESSAGE] = 'File is error.';
     }
-    header("Location: ./");
+//    header("Location: ./");
 }
 ?>
 <div> <?php if (isset($_SESSION[$SESSION_EXCEL_MESSAGE])) echo $_SESSION[$SESSION_EXCEL_MESSAGE]; ?> </div>
