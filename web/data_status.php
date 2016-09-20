@@ -50,9 +50,9 @@
             $db = connect();
             if ($db) {
                 $users = getAllUser($db);
-                makeTable($users, 'All Users:');
+                makeTable($users, 'All Users In Database:');
                 $excels = getAllExcel($db);
-                makeTable($excels, 'All Excel:');
+                makeTable($excels, 'All Excel In Database:');
                 $db->close();
             } else {
                 $_SESSION[$SESSION_DB_MESSAGE] = 'Can\'t connect to database.';
