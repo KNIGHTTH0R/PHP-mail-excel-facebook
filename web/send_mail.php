@@ -28,7 +28,7 @@ $mail->IsSMTP(); // telling the class to use SMTP
 $mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
 $mail->SMTPAuth   = true;                  // enable SMTP authentication
 $mail->SMTPSecure = "tls";                 // sets the prefix to the servier
-$mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
+$mail->Host       = "up-excel.herokuapp.com";      // sets GMAIL as the SMTP server
 $mail->Port       = 587;                   // set the SMTP port for the GMAIL server
 $mail->Username   = $email;  // GMAIL username
 $mail->Password   = $password;
