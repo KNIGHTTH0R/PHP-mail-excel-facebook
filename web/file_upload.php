@@ -27,23 +27,32 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
         if (!$email || !$password) {
             return false;
         }
-        $mail = new PHPMailer;
-        $mail->isSMTP();
-        $mail->SMTPAuth = true;
-        $mail->Username = $email;
-        $mail->Password = $password;
-        $mail->SMTPSecure = 'tls';
+        $mail = new PHPMailer(true);
+        $mail->IsSMTP();
+        try {
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = 'ssl';
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Port = 465;
+            $mail->Username = $email;
+            $mail->Password = $password;
 
-        $mail->setFrom($email);
-        $mail->addAddress($toMail);
+            $mail->setFrom($email);
+            $mail->addAddress($toMail);
+            $mail->addAttachment($attach);
+            $mail->Subject = 'Uploaded Excel file';
+            $mail->Body = '<b>User:</b> fb-id=' . $profile['id'] .
+                ', fb-user-name=' . $profile['name'] . ', fb-email=' . $profile['email'];
 
-        $mail->addAttachment($attach);
-
-        $mail->Subject = 'Uploaded Excel file';
-        $mail->Body = '<b>User:</b> fb-id=' . $profile['id'] .
-            ', fb-user-name=' . $profile['name'] . ', fb-email=' . $profile['email'];
-
-        return $mail->send();
+            $mail->Send();
+            return true;
+        } catch (phpmailerException $e) {
+            echo $e->errorMessage();
+            return false;
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            return false;
+        }
     }
 
     function isValidExcel($inputFile)
@@ -156,7 +165,7 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
     } else {
         $_SESSION[$SESSION_EXCEL_MESSAGE] = 'File is error.';
     }
-    header("Location: ./");
+//    header("Location: ./");
 }
 ?>
 <div> <?php if (isset($_SESSION[$SESSION_EXCEL_MESSAGE])) echo $_SESSION[$SESSION_EXCEL_MESSAGE]; ?> </div>
