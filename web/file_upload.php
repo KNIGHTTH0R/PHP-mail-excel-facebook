@@ -12,15 +12,18 @@ $SESSION_MAIL_MESSAGE = 'mail_message';
 if (!(isset($profile[$PROFILE_ID]) || isset($profile['email']) || isset($profile['name'])))
     die('No profile information');
 
-$user = array();
-
 include 'PHPExcel/PHPExcel/IOFactory.php';
 require 'PHPMailer/PHPMailerAutoload.php';
-require 'db.php';
+require_once 'db.php';
 
 $file_name = 'excel';
 if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
 
+    $_SESSION[$SESSION_EXCEL_MESSAGE] = null;
+    $_SESSION[$SESSION_UPLOAD_MESSAGE] = null;
+    $_SESSION[$SESSION_DB_MESSAGE] = null;
+    $_SESSION[$SESSION_MAIL_MESSAGE] = null;
+    
     function setMail($toMail, $attach)
     {
         $mail = new PHPMailer;
@@ -127,6 +130,7 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
                             $_SESSION[$SESSION_DB_MESSAGE] = 'File\'s content ' .
                                 (insertExcel($db, $profile[$PROFILE_ID], $data['data']) ? 'have been' : 'can\'t be') .
                                 ' saved into database.';
+                            $db->close();
                         } else {
                             $_SESSION[$SESSION_DB_MESSAGE] = 'Can\'t connect to database.';
                         }

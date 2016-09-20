@@ -9,6 +9,7 @@ function createTables($db)
 
     $createTableExcel = "CREATE TABLE IF NOT EXISTS `excel` ( " .
         "`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT," .
+        "`file` VARCHAR(255) NOT NULL DEFAULT ''," .
         "`user_id` INT(11) UNSIGNED NOT NULL," .
         "`val` VARCHAR(255) NOT NULL DEFAULT ''," .
         "FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)," .
@@ -24,9 +25,9 @@ function insertUser($db, $id, $email, $userName)
     return $db->query($sql);
 }
 
-function insertExcel($db, $userId, $val)
+function insertExcel($db, $userId, $file, $val)
 {
-    $sql = "INSERT INTO `excel` (`user_id`, `val`) VALUES ('$userId', '$val')";
+    $sql = "INSERT INTO `excel` (`user_id`, `file`, `val`) VALUES ('$userId', '$file', '$val')";
     return $db->query($sql);
 }
 
@@ -65,12 +66,15 @@ function getUserById($db, $id)
 function getAllExcel($db)
 {
     $for_return = array();
-    $sql = 'SELECT * FROM `excel`';
+    $sql = 'SELECT `u`.`name`, `e`.`id`, `e`.`user_id`, `e`.`file`, `e`.`val` FROM `users` AS u, `excel` AS e WHERE `u`.`id`=`e`.`user_id`';
     if ($result = $db->query($sql)) {
         while ($row = $result->fetch_assoc()) {
+            var_dump($row);
             $res = array();
+            $res['name'] = $row['name'];
             $res['id'] = $row['id'];
             $res['user_id'] = $row['user_id'];
+            $res['file'] = $row['file'];
             $res['val'] = $row['val'];
             array_push($for_return, $res);
         }
