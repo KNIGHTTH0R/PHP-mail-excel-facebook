@@ -52,6 +52,7 @@ function getAllUser($db)
             $res['user_name'] = $row['user_name'];
             $res['email'] = $row['email'];
             array_push($for_return, $res);
+            var_dump($row);
         }
     } else {
         error_log($db->error);
