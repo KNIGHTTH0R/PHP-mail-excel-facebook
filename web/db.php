@@ -81,11 +81,8 @@ function getAllExcel($db)
 {
     $for_return = array();
     $sql = 'SELECT `u`.`user_name`, `e`.`id`, `e`.`user_id`, `e`.`file`, `e`.`val` FROM `users` AS u, `excel` AS e WHERE `u`.`id`=`e`.`user_id`';
-    echo 'start get all excel<br/>';
     if ($result = $db->query($sql)) {
-        var_dump($result);
         while ($row = $result->fetch_assoc()) {
-            var_dump($row);
             $res = array();
             $res['user_name'] = $row['user_name'];
             $res['id'] = $row['id'];
@@ -95,7 +92,6 @@ function getAllExcel($db)
             array_push($for_return, $res);
         }
     } else {
-        echo $db->error . '<br/>';
         error_log($db->error);
     }
     return $for_return;
@@ -118,6 +114,12 @@ function getAllExcelByUserId($db, $userId)
         error_log($db->error);
     }
     return $for_return;
+}
+
+function clearAll($db)
+{
+    if (!$db->query("DELETE FROM users")) error_log($db->error);
+    if (!$db->query("DELETE FROM exel")) error_log($db->error);
 }
 
 function connect()
