@@ -67,6 +67,7 @@ if (isset($accessToken)) {
 //    echo '<br/>';
 //    echo '<a href="logout.php">Logout</a>';
     include 'file_upload.php';
+    include 'data_status.php';
     include 'form_file.php';
 } else {
     // replace your website URL same as added in the developers.facebook.com/apps e.g. if you used http instead of https and you used non-www version or www version of your website then you must add the same here
