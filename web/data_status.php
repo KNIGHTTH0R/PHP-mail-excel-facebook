@@ -44,9 +44,9 @@ require_once 'db.php';
 $db = connect();
 if ($db) {
     $users = getAllUser($db);
-    makeTable($users, 'All Users');
+    makeTable($users, 'All Users:');
     $excels = getAllExcel($db);
-    makeTable($excels, 'All Excel');
+    makeTable($excels, 'All Excel:');
     $db->close();
 } else {
     $_SESSION[$SESSION_DB_MESSAGE] = 'Can\'t connect to database.';
