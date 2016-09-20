@@ -27,6 +27,9 @@ function insertUser($db, $id, $email, $userName)
 
 function insertExcel($db, $userId, $file, $val)
 {
+    var_dump($userId);
+    var_dump($file);
+    var_dump($val);
     $sql = "INSERT INTO `excel` (`user_id`, `file`, `val`) VALUES ('$userId', '$file', '$val')";
     return $db->query($sql);
 }
@@ -91,6 +94,7 @@ function getAllExcelByUserId($db, $userId)
             $res = array();
             $res['id'] = $row['id'];
             $res['user_id'] = $row['user_id'];
+            $res['file'] = $row['file'];
             $res['val'] = $row['val'];
             array_push($for_return, $res);
         }

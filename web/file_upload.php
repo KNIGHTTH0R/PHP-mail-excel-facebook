@@ -9,7 +9,7 @@ $SESSION_EXCEL_MESSAGE = 'excel_message';
 $SESSION_UPLOAD_MESSAGE = 'upload_message';
 $SESSION_DB_MESSAGE = 'db_message';
 $SESSION_MAIL_MESSAGE = 'mail_message';
-if (!(isset($profile[$PROFILE_ID]) || isset($profile['email']) || isset($profile['name'])))
+if (!isset($profile[$PROFILE_ID]) || !isset($profile['email']) || !isset($profile['name']))
     die('No profile information');
 
 include 'PHPExcel/PHPExcel/IOFactory.php';
@@ -23,8 +23,8 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
     $_SESSION[$SESSION_UPLOAD_MESSAGE] = null;
     $_SESSION[$SESSION_DB_MESSAGE] = null;
     $_SESSION[$SESSION_MAIL_MESSAGE] = null;
-    
-    function setMail($toMail, $attach)
+
+    function sentMail($toMail, $attach)
     {
         $mail = new PHPMailer;
 
@@ -128,13 +128,13 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
                             if (count($userDb) == 0)
                                 insertUser($db, $profile[$PROFILE_ID], $profile[$PROFILE_EMAIL], $profile[$PROFILE_NAME]);
                             $_SESSION[$SESSION_DB_MESSAGE] = 'File\'s content ' .
-                                (insertExcel($db, $profile[$PROFILE_ID], $data['data']) ? 'have been' : 'can\'t be') .
+                                (insertExcel($db, $profile[$PROFILE_ID], $uploaded['fileName'], $data['data']) ? 'have been' : 'can\'t be') .
                                 ' saved into database.';
                             $db->close();
                         } else {
                             $_SESSION[$SESSION_DB_MESSAGE] = 'Can\'t connect to database.';
                         }
-                        $_SESSION[$SESSION_MAIL_MESSAGE] = 'Excel file ' . (setMail($toMail, $uploaded['dist_fileName']) ?
+                        $_SESSION[$SESSION_MAIL_MESSAGE] = 'Excel file ' . (sentMail($toMail, $uploaded['dist_fileName']) ?
                                 'have been' : 'can\'t be') . ' sent to ' . $toMail;
                     } else {
                         $_SESSION[$SESSION_UPLOAD_MESSAGE] = 'Excel file can\'t be uploaded.';

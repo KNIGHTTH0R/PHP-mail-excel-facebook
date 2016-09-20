@@ -48,6 +48,18 @@ if (isset($accessToken)) {
     try {
         $profile_request = $fb->get('/me?fields=id,name,first_name,last_name,email');
         $profile = $profile_request->getGraphNode()->asArray();
+
+        $PROFILE_ID = 'id';
+        $PROFILE_EMAIL = 'email';
+        $PROFILE_NAME = 'name';
+        if (isset($profile[$PROFILE_ID]) && isset($profile['email']) && isset($profile['name'])) {
+            require_once 'db.php';
+            $db = connect();
+            if ($db) {
+                insertUser($db, $profile[$PROFILE_ID], $profile[$PROFILE_EMAIL], $profile[$PROFILE_NAME]);
+                $db->close();
+            }
+        }
     } catch (Facebook\Exceptions\FacebookResponseException $e) {
         // When Graph returns an error
         echo 'Graph returned an error: ' . $e->getMessage();
