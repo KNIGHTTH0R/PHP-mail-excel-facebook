@@ -1,6 +1,8 @@
+<div class="container">
+    <h3>Hi, <?php echo $profile['name']; ?></h3>
+    <a class="btn btn-warning" href="logout.php">Logout</a><br/>
+</div>
 <?php
-echo '<h3>Hi, ' . $profile['name'] . '</h3>';
-echo '<a href="logout.php">Logout</a><br/>';
 
 $PROFILE_ID = 'id';
 $PROFILE_EMAIL = 'email';
@@ -9,7 +11,7 @@ $SESSION_EXCEL_MESSAGE = 'excel_message';
 $SESSION_UPLOAD_MESSAGE = 'upload_message';
 $SESSION_DB_MESSAGE = 'db_message';
 $SESSION_MAIL_MESSAGE = 'mail_message';
-if (!isset($profile[$PROFILE_ID]) || !isset($profile['email']) || !isset($profile['name']))
+if (!isset($profile[$PROFILE_ID]) || !isset($profile[$PROFILE_EMAIL]) || !isset($profile[$PROFILE_NAME]))
     die('No profile information');
 
 $file_name = 'excel';
