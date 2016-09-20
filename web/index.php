@@ -2,9 +2,11 @@
 session_start();
 require_once '../vendor/autoload.php';
 
+$app_id = getenv('APP_ID');
+$app_secret = getenv('APP_SECRET');
 $fb = new Facebook\Facebook([
-    'app_id' => '307509092945291',
-    'app_secret' => '3f12b5853b84ac765c9d56ecf2e95c43',
+    'app_id' => $app_id ? $app_id : '307509092945291',
+    'app_secret' => $app_secret ? $app_secret : '3f12b5853b84ac765c9d56ecf2e95c43',
     'default_graph_version' => 'v2.4',
 ]);
 $helper = $fb->getRedirectLoginHelper();
@@ -65,6 +67,7 @@ if (isset($accessToken)) {
 //    echo '<br/>';
 //    echo '<a href="logout.php">Logout</a>';
     include 'file_upload.php';
+    include 'form_file.php';
 } else {
     // replace your website URL same as added in the developers.facebook.com/apps e.g. if you used http instead of https and you used non-www version or www version of your website then you must add the same here
     $permissions = ['email']; // optional

@@ -14,32 +14,20 @@ function createTables($db)
         "FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)," .
         "PRIMARY KEY  (`id`))";
 
-    if (!$db->query($createTableUser)) {
-        echo "Table creation failed: (" . $db->errno . ") " . $db->error . '<br/>';
-    }
-    if (!$db->query($createTableExcel)) {
-        echo "Table creation failed: (" . $db->errno . ") " . $db->error . '<br/>';
-    }
+    $db->query($createTableUser);
+    $db->query($createTableExcel);
 }
 
 function insertUser($db, $id, $email, $userName)
 {
     $sql = "INSERT INTO `users` (`id`, `email`, `user_name`) VALUES ('$id', '$email', '$userName')";
-    if ($db->query($sql)) {
-        echo 'New user record created successfully' . '<br/>';
-    } else {
-        echo "Error: " . $sql . "<br>" . $db->error . '<br/>';
-    }
+    return $db->query($sql);
 }
 
 function insertExcel($db, $userId, $val)
 {
     $sql = "INSERT INTO `excel` (`user_id`, `val`) VALUES ('$userId', '$val')";
-    if ($db->query($sql)) {
-        echo "New excel record created successfully" . '<br/>';
-    } else {
-        echo "Error: " . $sql . "<br>" . $db->error . '<br/>';
-    }
+    return $db->query($sql);
 }
 
 function getAllUser($db)
@@ -108,13 +96,20 @@ function getAllExcelByUserId($db, $userId)
 
 function connect()
 {
-    $user = 'ahladang_upload';
-//    $user = 'root';
-    $pwd = 'testuploadexcel';
-//    $pwd = '';
-    $db_name = 'ahladang_uploadexcel';
-//    $db_name = 'uploadexcel';
-    $db = new mysqli('localhost', $user, $pwd, $db_name);
+    $url = getenv('CLEARDB_DATABASE_URL');
+    if ($url) {
+        $url = parse_url($url);
+        $host = $url["host"];
+        $user = $url["user"];
+        $pwd = $url["pass"];
+        $db_name = substr($url["path"], 1);
+    } else {
+        $host = 'localhost';
+        $user = 'root';
+        $pwd = '';
+        $db_name = 'uploadexcel';
+    }
+    $db = new mysqli($host, $user, $pwd, $db_name);
     if ($db->connect_errno > 0) {
         return null;
     }

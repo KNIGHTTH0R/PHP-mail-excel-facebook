@@ -3,11 +3,17 @@ echo '<h3>Hi, $profile["name"]</h3>';
 echo '<br/>';
 echo '<a href="logout.php">Logout</a><br/>';
 
+if (isset($profile['id']) && isset($profile['email']) && isset($profile['name'])) die('No profile information');
+
 $user = array(
     'id' => $profile['id'],
     'email' => $profile['email'],
     'user_name' => $profile['name']
 );
+$SESSION_EXCEL_MESSAGE = 'excel_message';
+$SESSION_UPLOAD_MESSAGE = 'upload_message';
+$SESSION_DB_MESSAGE = 'db_message';
+$SESSION_MAIL_MESSAGE = 'mail_message';
 
 include 'PHPExcel/PHPExcel/IOFactory.php';
 require 'PHPMailer/PHPMailerAutoload.php';
@@ -103,72 +109,49 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
     }
 
     $toMail = $_POST['email'];
-    if ($_FILES[$file_name]['name']) {
-        if (!$_FILES[$file_name]['error']) {
-            $inputFile = $_FILES[$file_name]['name'];
-            $inputTmpFile = $_FILES[$file_name]['tmp_name'];
-            $extension = strtoupper(pathinfo($inputFile, PATHINFO_EXTENSION));
-            if ($extension == 'XLSX' || $extension == 'XLS') {
-                if (isValidExcel($inputTmpFile)) {
-                    $data = readDataFromExcel($inputTmpFile);
-                    if ($data['success']) {
-                        $uploaded = isUploaded($_FILES[$file_name]['tmp_name'], $inputFile);
-                        if ($uploaded['success']) {
-                            echo 'Excel file have been uploaded<br/>';
-
-                            $db = connect();
-                            if ($db) {
-                                $userDb = getUserById($db, $user['id']);
-                                if (count($userDb) == 0)
-                                    insertUser($db, $user['id'], $user['email'], $user['user_name']);
-                                insertExcel($db, $user['id'], $data['data']);
-                            } else {
-                                echo 'Can\'t connect to database';
-                            }
-                            if (setMail($toMail, $uploaded['dist_fileName'])) {
-                                echo 'Excel file have been sent to ' . $toMail . '<br/>';
-                            } else {
-                                echo 'Excel can\'t be sent to ' . $toMail . '<br/>';
-                            }
+    if (!$_FILES[$file_name]['error']) {
+        $inputFile = $_FILES[$file_name]['name'];
+        $inputTmpFile = $_FILES[$file_name]['tmp_name'];
+        $extension = strtoupper(pathinfo($inputFile, PATHINFO_EXTENSION));
+        if ($extension == 'XLSX' || $extension == 'XLS') {
+            if (isValidExcel($inputTmpFile)) {
+                $data = readDataFromExcel($inputTmpFile);
+                if ($data['success']) {
+                    $uploaded = isUploaded($_FILES[$file_name]['tmp_name'], $inputFile);
+                    if ($uploaded['success']) {
+                        $_SESSION[$SESSION_UPLOAD_MESSAGE] = 'Excel file have been uploaded';
+                        $db = connect();
+                        if ($db) {
+                            $userDb = getUserById($db, $user['id']);
+                            if (count($userDb) == 0)
+                                insertUser($db, $user['id'], $user['email'], $user['user_name']);
+                            $_SESSION[$SESSION_DB_MESSAGE] = 'File\'s content ' .
+                                (insertExcel($db, $user['id'], $data['data']) ? 'have been' : 'can\'t be') .
+                                ' saved into database.';
+                        } else {
+                            $_SESSION[$SESSION_DB_MESSAGE] = 'Can\'t connect to database.';
                         }
+                        $_SESSION[$SESSION_MAIL_MESSAGE] = 'Excel file ' . (setMail($toMail, $uploaded['dist_fileName']) ?
+                                'have been' : 'can\'t be') . ' sent to ' . $toMail;
+                    } else {
+                        $_SESSION[$SESSION_UPLOAD_MESSAGE] = 'Excel file can\'t be uploaded.';
                     }
                 } else {
-                    echo 'Invalid file format<br/>';
+                    $_SESSION[$SESSION_EXCEL_MESSAGE] = 'Fail to read file\'s content.';
                 }
             } else {
-                echo 'File is not Excel type<br/>';
+                $_SESSION[$SESSION_EXCEL_MESSAGE] = 'Invalid file format.';
             }
+        } else {
+            $_SESSION[$SESSION_EXCEL_MESSAGE] = 'File is not Excel type.';
         }
+    } else {
+        $_SESSION[$SESSION_EXCEL_MESSAGE] = 'File is error.';
     }
+    header("Location: ./");
 }
-
 ?>
-
-
-<form action="." method="POST" enctype="multipart/form-data">
-    <br/>
-    <div>
-        <label form="excel">Select excel file:</label>
-        <input id="excel" type="file" name="excel" onchange="checkFile(this);" accept=".xls, .xlsx" required>
-    </div>
-    <br/>
-    <div>
-        <label form="email">Email to receive:</label>
-        <input id="email" type="email" name="email" required>
-    </div>
-    <br/>
-    <input type="submit" value="Upload">
-</form>
-<script type="text/javascript" language="javascript">
-    function checkFile(sender) {
-        var validExts = new Array(".xlsx", ".xls");
-        var fileExt = sender.value;
-        fileExt = fileExt.substring(fileExt.lastIndexOf('.'));
-        if (fileExt && validExts.indexOf(fileExt) < 0) {
-            alert("Invalid file selected, valid files are of " + validExts.toString() + " types.");
-            sender.value = '';
-            return false;
-        }
-        else return true;
-    }
-</script>
+<div> <?php if (isset($_SESSION[$SESSION_EXCEL_MESSAGE])) echo $_SESSION[$SESSION_EXCEL_MESSAGE]; ?> </div>
+<div> <?php if (isset($_SESSION[$SESSION_UPLOAD_MESSAGE])) echo $_SESSION[$SESSION_UPLOAD_MESSAGE]; ?> </div>
+<div> <?php if (isset($_SESSION[$SESSION_DB_MESSAGE])) echo $_SESSION[$SESSION_DB_MESSAGE]; ?> </div>
+<div> <?php if (isset($_SESSION[$SESSION_MAIL_MESSAGE])) echo $_SESSION[$SESSION_MAIL_MESSAGE]; ?> </div>
