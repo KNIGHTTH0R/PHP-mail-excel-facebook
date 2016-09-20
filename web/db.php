@@ -2,15 +2,15 @@
 function createTables($db)
 {
     $createTableUser = "CREATE TABLE IF NOT EXISTS `users` ( " .
-        "`id` INT(11) UNSIGNED NOT NULL," .
+        "`id` VARCHAR(255) NOT NULL," .
         "`email` VARCHAR(255) NOT NULL DEFAULT ''," .
-        "`user_name` VARCHAR(255) NOT NULL DEFAULT ''," .
+        "`user_name` VARCHAR(255) NOT NULL DEFAULT '')" .
         "PRIMARY KEY  (`id`))";
 
     $createTableExcel = "CREATE TABLE IF NOT EXISTS `excel` ( " .
         "`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT," .
         "`file` VARCHAR(255) NOT NULL DEFAULT ''," .
-        "`user_id` INT(11) UNSIGNED NOT NULL," .
+        "`user_id` VARCHAR(255) NOT NULL," .
         "`val` VARCHAR(255) NOT NULL DEFAULT ''," .
         "FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)," .
         "PRIMARY KEY  (`id`))";
@@ -120,8 +120,8 @@ function getAllExcelByUserId($db, $userId)
 
 function clearAll($db)
 {
-    if (!$db->query("DELETE FROM users")) error_log($db->error);
-    if (!$db->query("DELETE FROM excel")) error_log($db->error);
+    if (!$db->query("DROP TABLE excel")) error_log($db->error);
+    if (!$db->query("DROP TABLE users")) error_log($db->error);
 }
 
 function connect()
