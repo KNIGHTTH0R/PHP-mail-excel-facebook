@@ -83,7 +83,7 @@ if (isset($accessToken)) {
 } else { ?>
     <div class="container">
         <h3>Not login yet!</h3>
-        <a class="btn btn-info" href="<?php echo $loginUrl; ?>">Log in with Facebook</a>
+        <a class="btn btn-primary" href="<?php echo $loginUrl; ?>">Log in with Facebook</a>
     </div>
 <?php } ?>
 

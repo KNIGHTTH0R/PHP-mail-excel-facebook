@@ -1,7 +1,7 @@
 <div class="container" style="padding-top: 50px;">
     <div class="row">
         <div class="col-md-6">
-            <a class="btn btn-sm btn-primary" href="clear_db.php">Clear Database and files.</a>
+            <a class="btn btn-sm btn-danger" href="clear_db.php">Clear Database and files.</a>
             <fieldset class="scheduler-border">
                 <legend class="scheduler-border">Files Uploaded:</legend>
                 <ul>
