@@ -81,6 +81,7 @@ function getAllExcel($db)
 {
     $for_return = array();
     $sql = 'SELECT `u`.`name`, `e`.`id`, `e`.`user_id`, `e`.`file`, `e`.`val` FROM `users` AS u, `excel` AS e WHERE `u`.`id`=`e`.`user_id`';
+    echo 'start get all excel<br/>';
     if ($result = $db->query($sql)) {
         var_dump($result);
         while ($row = $result->fetch_assoc()) {
@@ -94,6 +95,7 @@ function getAllExcel($db)
             array_push($for_return, $res);
         }
     } else {
+        echo $db->error . '<br/>';
         error_log($db->error);
     }
     return $for_return;
