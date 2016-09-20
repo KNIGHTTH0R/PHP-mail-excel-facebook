@@ -24,9 +24,8 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
     {
         $email = getenv('EMAIL');
         $password = getenv('EMAIL_PASSWORD');
-        if (!$email || !$password) {
-            return false;
-        }
+        var_dump($email);
+        var_dump($password);
         $mail = new PHPMailer(true);
         $mail->IsSMTP();
         try {
