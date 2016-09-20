@@ -174,14 +174,14 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <span
-                class="label-info"> <?php if (isset($_SESSION[$SESSION_EXCEL_MESSAGE])) echo $_SESSION[$SESSION_EXCEL_MESSAGE]; ?> </span>
-            <span
-                class="label-info"> <?php if (isset($_SESSION[$SESSION_UPLOAD_MESSAGE])) echo $_SESSION[$SESSION_UPLOAD_MESSAGE]; ?> </span>
-            <span
-                class="label-info"> <?php if (isset($_SESSION[$SESSION_DB_MESSAGE])) echo $_SESSION[$SESSION_DB_MESSAGE]; ?> </span>
-            <span
-                class="label-info"> <?php if (isset($_SESSION[$SESSION_MAIL_MESSAGE])) echo $_SESSION[$SESSION_MAIL_MESSAGE]; ?> </span>
+            <p
+                class="label-info"> <?php if (isset($_SESSION[$SESSION_EXCEL_MESSAGE])) echo $_SESSION[$SESSION_EXCEL_MESSAGE]; ?> </p>
+            <p
+                class="label-info"> <?php if (isset($_SESSION[$SESSION_UPLOAD_MESSAGE])) echo $_SESSION[$SESSION_UPLOAD_MESSAGE]; ?> </p>
+            <p
+                class="label-info"> <?php if (isset($_SESSION[$SESSION_DB_MESSAGE])) echo $_SESSION[$SESSION_DB_MESSAGE]; ?> </p>
+            <p
+                class="label-info"> <?php if (isset($_SESSION[$SESSION_MAIL_MESSAGE])) echo $_SESSION[$SESSION_MAIL_MESSAGE]; ?> </p>
         </div>
     </div>
 </div>
