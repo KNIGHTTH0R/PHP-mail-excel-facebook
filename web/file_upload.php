@@ -43,8 +43,8 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
             $mail->addAddress($toMail);
             $mail->addAttachment($attach);
             $mail->Subject = 'Uploaded Excel file';
-            $mail->Body = '<b>User:</b> fb-id=' . $profile['id'] .
-                ', fb-user-name=' . $profile['name'] . ', fb-email=' . $profile['email'];
+            $mail->Body = 'User: fb-id="' . $profile['id'] .
+                '", fb-user-name="' . $profile['name'] . '", fb-email="' . $profile['email'] . '"';
 
             $mail->Send();
             return true;
