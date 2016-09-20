@@ -80,14 +80,14 @@ function getUserById($db, $id)
 function getAllExcel($db)
 {
     $for_return = array();
-    $sql = 'SELECT `u`.`name`, `e`.`id`, `e`.`user_id`, `e`.`file`, `e`.`val` FROM `users` AS u, `excel` AS e WHERE `u`.`id`=`e`.`user_id`';
+    $sql = 'SELECT `u`.`user_name`, `e`.`id`, `e`.`user_id`, `e`.`file`, `e`.`val` FROM `users` AS u, `excel` AS e WHERE `u`.`id`=`e`.`user_id`';
     echo 'start get all excel<br/>';
     if ($result = $db->query($sql)) {
         var_dump($result);
         while ($row = $result->fetch_assoc()) {
             var_dump($row);
             $res = array();
-            $res['name'] = $row['name'];
+            $res['user_name'] = $row['user_name'];
             $res['id'] = $row['id'];
             $res['user_id'] = $row['user_id'];
             $res['file'] = $row['file'];
