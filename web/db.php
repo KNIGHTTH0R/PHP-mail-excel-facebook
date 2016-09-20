@@ -15,23 +15,31 @@ function createTables($db)
         "FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)," .
         "PRIMARY KEY  (`id`))";
 
-    $db->query($createTableUser);
-    $db->query($createTableExcel);
+    if (!$db->query($createTableUser)) error_log($db->error);
+    if (!$db->query($createTableExcel)) error_log($db->error);
 }
 
 function insertUser($db, $id, $email, $userName)
 {
     $sql = "INSERT INTO `users` (`id`, `email`, `user_name`) VALUES ('$id', '$email', '$userName')";
-    return $db->query($sql);
+    if ($db->query($sql)) {
+        return true;
+    } else {
+        error_log($db->error);
+        return false;
+    }
 }
 
 function insertExcel($db, $userId, $file, $val)
 {
-    var_dump($userId);
-    var_dump($file);
-    var_dump($val);
+    debug_to_console($userId . ', ' . $file . ', ' . $val);
     $sql = "INSERT INTO `excel` (`user_id`, `file`, `val`) VALUES ('$userId', '$file', '$val')";
-    return $db->query($sql);
+    if ($db->query($sql)) {
+        return true;
+    } else {
+        error_log($db->error);
+        return false;
+    }
 }
 
 function getAllUser($db)
@@ -46,6 +54,8 @@ function getAllUser($db)
             $res['email'] = $row['email'];
             array_push($for_return, $res);
         }
+    } else {
+        error_log($db->error);
     }
     return $for_return;
 }
@@ -62,6 +72,8 @@ function getUserById($db, $id)
             $res['email'] = $row['email'];
             array_push($for_return, $res);
         }
+    } else {
+        error_log($db->error);
     }
     return $for_return;
 }
@@ -81,6 +93,8 @@ function getAllExcel($db)
             $res['val'] = $row['val'];
             array_push($for_return, $res);
         }
+    } else {
+        error_log($db->error);
     }
     return $for_return;
 }
@@ -98,6 +112,8 @@ function getAllExcelByUserId($db, $userId)
             $res['val'] = $row['val'];
             array_push($for_return, $res);
         }
+    } else {
+        error_log($db->error);
     }
     return $for_return;
 }
@@ -119,6 +135,7 @@ function connect()
     }
     $db = new mysqli($host, $user, $pwd, $db_name);
     if ($db->connect_errno > 0) {
+        error_log($db->error);
         return null;
     }
     createTables($db);
