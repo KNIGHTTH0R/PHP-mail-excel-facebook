@@ -1,3 +1,19 @@
+<h3>Files Uploaded:</h3>
+<ul>
+    <?php
+    if ($handle = opendir('files')) {
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != ".." &&
+                strtolower(substr($file, strrpos($file, '.') + 1)) == 'xls' ||
+                strtolower(substr($file, strrpos($file, '.') + 1)) == 'xlsx'
+            ) {
+                $thelist .= '<li>' . $file . '</li>';
+            }
+        }
+        closedir($handle);
+    }
+    ?>
+</ul>
 <?php
 function makeTable($data, $title)
 {
