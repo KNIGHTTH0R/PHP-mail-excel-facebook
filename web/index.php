@@ -8,7 +8,6 @@ $fb = new Facebook\Facebook([
     'default_graph_version' => 'v2.4',
 ]);
 $helper = $fb->getRedirectLoginHelper();
-$permissions = ['email']; // optional
 
 try {
     if (isset($_SESSION['facebook_access_token'])) {
@@ -67,6 +66,7 @@ if (isset($accessToken)) {
     echo '<a href="logout.php">Logout</a>';
 } else {
     // replace your website URL same as added in the developers.facebook.com/apps e.g. if you used http instead of https and you used non-www version or www version of your website then you must add the same here
+    $permissions = ['email']; // optional
     $loginUrl = $helper->getLoginUrl('http://up-excel.herokuapp.com/index.php', $permissions);
     echo '<a href="' . $loginUrl . '">Log in with Facebook!</a>';
 }
