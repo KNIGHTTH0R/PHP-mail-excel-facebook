@@ -21,16 +21,19 @@ $mail->AltBody = 'name:Eng Raksa\n id:123';*/
 require 'PHPMailer/PHPMailerAutoload.php';
 
 $mail = new PHPMailer(); // create a new object
-$mail->IsSMTP(); // enable SMTP
 $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
-$mail->SMTPAuth = true; // authentication enabled
-$mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
-$mail->Host = "smtp.gmail.com";
-$mail->Port = 465; // or 587
-$mail->IsHTML(true);
-$mail->Username = $email;
-$mail->Password = $password;
+
+
+$mail->IsSMTP(); // telling the class to use SMTP
+$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
+$mail->SMTPAuth   = true;                  // enable SMTP authentication
+$mail->SMTPSecure = "tls";                 // sets the prefix to the servier
+$mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
+$mail->Port       = 587;                   // set the SMTP port for the GMAIL server
+$mail->Username   = $email;  // GMAIL username
+$mail->Password   = $password;
 $mail->SetFrom($email);
+
 $mail->Subject = "Test";
 $mail->Body = "hello";
 $mail->AddAddress("eng.raksa@gmail.com");
