@@ -66,7 +66,7 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
         $name = $info['filename'];
         $i = 0;
         $suf = '';
-        $dist = basename(__DIR__) . 'files/';
+        $dist = basename(__DIR__) . '/' . 'files/';
         error_log($dist);
         do {
             $newFileName = $name . $suf . '.' . $ext;
