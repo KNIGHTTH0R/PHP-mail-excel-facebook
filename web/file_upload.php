@@ -24,8 +24,9 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
     {
         $email = getenv('EMAIL');
         $password = getenv('EMAIL_PASSWORD');
-        var_dump($email);
-        var_dump($password);
+        if (!$email || !$password) {
+            return false;
+        }
         $mail = new PHPMailer(true);
         $mail->IsSMTP();
         try {
@@ -85,7 +86,7 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
         }
         $result['success'] = move_uploaded_file($file, $dist . $newFileName);
         $result['fileName'] = $newFileName;
-        $result['dist_fileName'] = $newFileName;
+        $result['dist_fileName'] = $dist . $newFileName;
         return $result;
     }
 
@@ -164,7 +165,7 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
     } else {
         $_SESSION[$SESSION_EXCEL_MESSAGE] = 'File is error.';
     }
-//    header("Location: ./");
+    header("Location: ./");
 }
 ?>
 <div> <?php if (isset($_SESSION[$SESSION_EXCEL_MESSAGE])) echo $_SESSION[$SESSION_EXCEL_MESSAGE]; ?> </div>
