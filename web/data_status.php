@@ -1,7 +1,8 @@
 <h3>Files Uploaded:</h3>
 <ul>
     <?php
-    if ($handle = opendir('files')) {
+    $dist = basename(__DIR__) . 'files/';
+    if ($handle = opendir($dist)) {
         while (false !== ($file = readdir($handle))) {
             if ($file != "." && $file != ".." &&
                 strtolower(substr($file, strrpos($file, '.') + 1)) == 'xls' ||
