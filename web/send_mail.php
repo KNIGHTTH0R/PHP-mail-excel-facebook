@@ -25,7 +25,7 @@ $mail->SMTPDebug = 1; // debugging: 1 = errors and messages, 2 = messages only
 
 
 $mail->IsSMTP(); // telling the class to use SMTP
-$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
+//$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
 $mail->SMTPAuth   = true;                  // enable SMTP authentication
 $mail->Host = "smtp.gmail.com"; // sets GMAIL as the SMTP server
 $mail->SMTPSecure = "ssl";
