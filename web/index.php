@@ -60,10 +60,11 @@ if (isset($accessToken)) {
     }
 
     // printing $profile array on the screen which holds the basic info about user
-    print_r($profile);
+//    print_r($profile);
     // Now you can redirect to another page and use the access token from $_SESSION['facebook_access_token']
-    echo '<br/>';
-    echo '<a href="logout.php">Logout</a>';
+//    echo '<br/>';
+//    echo '<a href="logout.php">Logout</a>';
+    include 'file_upload.php';
 } else {
     // replace your website URL same as added in the developers.facebook.com/apps e.g. if you used http instead of https and you used non-www version or www version of your website then you must add the same here
     $permissions = ['email']; // optional
