@@ -1,5 +1,5 @@
 <?php
-require_once '/vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 $fb = new \Facebook\Facebook([
   'app_id' => '307509092945291',
