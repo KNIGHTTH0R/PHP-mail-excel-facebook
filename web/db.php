@@ -32,7 +32,6 @@ function insertUser($db, $id, $email, $userName)
 
 function insertExcel($db, $userId, $file, $val)
 {
-    debug_to_console($userId . ', ' . $file . ', ' . $val);
     $sql = "INSERT INTO `excel` (`user_id`, `file`, `val`) VALUES ('$userId', '$file', '$val')";
     if ($db->query($sql)) {
         return true;
