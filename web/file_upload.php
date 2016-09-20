@@ -12,10 +12,6 @@ $SESSION_MAIL_MESSAGE = 'mail_message';
 if (!isset($profile[$PROFILE_ID]) || !isset($profile['email']) || !isset($profile['name']))
     die('No profile information');
 
-include 'PHPExcel/PHPExcel/IOFactory.php';
-require 'PHPMailer/PHPMailerAutoload.php';
-require_once 'db.php';
-
 $file_name = 'excel';
 if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
 
@@ -24,24 +20,28 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
     $_SESSION[$SESSION_DB_MESSAGE] = null;
     $_SESSION[$SESSION_MAIL_MESSAGE] = null;
 
-    function sentMail($toMail, $attach)
+    function sentMail($toMail, $attach, $profile)
     {
+        $email = getenv('EMAIL');
+        $password = getenv('EMAIL_PASSWORD');
+        if (!$email || !$password) {
+            return false;
+        }
         $mail = new PHPMailer;
-
         $mail->isSMTP();
         $mail->SMTPAuth = true;
-        $mail->Username = 'raksa.e@gmail.com';
-        $mail->Password = '2012thenameilove';
+        $mail->Username = $email;
+        $mail->Password = $password;
         $mail->SMTPSecure = 'tls';
 
-        $mail->setFrom('raksa.e@gmail.com');
+        $mail->setFrom($email);
         $mail->addAddress($toMail);
 
         $mail->addAttachment($attach);
 
         $mail->Subject = 'Uploaded Excel file';
-        $mail->Body = 'Detail Uploader <b>with attach excel file!</b>';
-        $mail->AltBody = 'name:Eng Raksa\n id:123';
+        $mail->Body = '<b>User:</b> fb-id=' . $profile['id'] .
+            ', fb-user-name=' . $profile['name'] . ', fb-email=' . $profile['email'];
 
         return $mail->send();
     }
@@ -136,8 +136,11 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
                         } else {
                             $_SESSION[$SESSION_DB_MESSAGE] = 'Can\'t connect to database.';
                         }
-                        $_SESSION[$SESSION_MAIL_MESSAGE] = 'Excel file ' . (sentMail($toMail, $uploaded['dist_fileName']) ?
-                                'have been' : 'can\'t be') . ' sent to ' . $toMail;
+                        $profileSend = array('id' => $profile[$PROFILE_ID], 'name' => $profile[$PROFILE_NAME],
+                            'email' => $profile[$PROFILE_EMAIL]);
+                        $_SESSION[$SESSION_MAIL_MESSAGE] = 'Excel file ' .
+                            (sentMail($toMail, $uploaded['dist_fileName'], $profileSend) ? 'have been' : 'can\'t be') .
+                            ' sent to ' . $toMail;
                     } else {
                         $_SESSION[$SESSION_UPLOAD_MESSAGE] = 'Excel file can\'t be uploaded.';
                     }

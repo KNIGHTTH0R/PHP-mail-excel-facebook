@@ -32,7 +32,7 @@ try {
     $mail->Username = $email;
     $mail->Password = $password;
     $mail->AddAddress('eng.raksa@gmail.com');
-    $mail->Subject = 'PHPMailer Test Subject via mail(), advanced';
+    $mail->Subject = 'Uploaded Excel file';
     $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!';
     $mail->MsgHTML(file_get_contents('contents.html'));
     $mail->Body = 'This is body';
