@@ -36,6 +36,7 @@ try {
     $mail->Subject = 'PHPMailer Test Subject via mail(), advanced';
     $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
     $mail->MsgHTML(file_get_contents('contents.html'));
+    $mail->Body = 'This is body';
     $mail->Send();
     echo "Message Sent OK<p></p>\n";
 } catch (phpmailerException $e) {
