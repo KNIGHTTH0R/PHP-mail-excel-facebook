@@ -1,7 +1,7 @@
 <h3>Files Uploaded:</h3>
 <ul>
     <?php
-    $dist = basename(__DIR__) . '/' . 'files/';
+    $dist = getcwd() . '/' . 'files/';
     if ($handle = opendir($dist)) {
         while (false !== ($file = readdir($handle))) {
             if ($file != "." && $file != ".." &&
