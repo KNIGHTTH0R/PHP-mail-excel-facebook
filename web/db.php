@@ -4,7 +4,7 @@ function createTables($db)
     $createTableUser = "CREATE TABLE IF NOT EXISTS `users` ( " .
         "`id` VARCHAR(255) NOT NULL," .
         "`email` VARCHAR(255) NOT NULL DEFAULT ''," .
-        "`user_name` VARCHAR(255) NOT NULL DEFAULT '')" .
+        "`user_name` VARCHAR(255) NOT NULL DEFAULT ''," .
         "PRIMARY KEY  (`id`))";
 
     $createTableExcel = "CREATE TABLE IF NOT EXISTS `excel` ( " .
