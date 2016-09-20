@@ -1,6 +1,6 @@
 <div class="container">
-    <h3>Hi, <?php echo $profile['name']; ?></h3>
-    <a class="btn btn-warning" href="logout.php">Logout</a><br/>
+    <span class="bg-primary">Hi, <?php echo $profile['name']; ?></span>
+    <span><a class="btn btn-warning" href="logout.php">Logout</a></span>
 </div>
 <?php
 
