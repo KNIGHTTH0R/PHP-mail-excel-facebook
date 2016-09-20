@@ -56,7 +56,7 @@ function getAllUser($db)
     } else {
         error_log($db->error);
     }
-    var_dump($result);
+    var_dump($for_return);
     return $for_return;
 }
 
