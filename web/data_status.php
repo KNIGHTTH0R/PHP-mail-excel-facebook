@@ -1,4 +1,4 @@
-<a href="clear_db.php">Clear Database.</a>
+<a href="clear_db.php">Clear Database and files.</a>
 
 <h3>Files Uploaded:</h3>
 <ul>
