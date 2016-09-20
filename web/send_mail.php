@@ -1,4 +1,7 @@
 <?php
+$email = getenv('EMAIL');
+$password = getenv('EMAIL_PASSWORD');
+
 /*$mail = new PHPMailer;
 
 $mail->isSMTP();
@@ -25,9 +28,9 @@ $mail->SMTPSecure = 'ssl'; // secure transfer enabled REQUIRED for Gmail
 $mail->Host = "smtp.gmail.com";
 $mail->Port = 465; // or 587
 $mail->IsHTML(true);
-$mail->Username = "raksa.e@gmail.com";
-$mail->Password = "2012thenameilove";
-$mail->SetFrom("raksa.e@gmail.com");
+$mail->Username = $email;
+$mail->Password = $password;
+$mail->SetFrom($email);
 $mail->Subject = "Test";
 $mail->Body = "hello";
 $mail->AddAddress("eng.raksa@gmail.com");
