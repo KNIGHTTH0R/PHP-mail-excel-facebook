@@ -16,6 +16,12 @@ if (!isset($profile[$PROFILE_ID]) || !isset($profile[$PROFILE_EMAIL]) || !isset(
 
 $file_name = 'excel';
 if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
+
+    $_SESSION[$SESSION_EXCEL_MESSAGE] = null;
+    $_SESSION[$SESSION_UPLOAD_MESSAGE] = null;
+    $_SESSION[$SESSION_DB_MESSAGE] = null;
+    $_SESSION[$SESSION_MAIL_MESSAGE] = null;
+
     function sentMail($toMail, $attach, $profile)
     {
         $email = getenv('EMAIL');
@@ -164,14 +170,18 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
     header("Location: ./");
 }
 ?>
-<div> <?php if (isset($_SESSION[$SESSION_EXCEL_MESSAGE])) echo $_SESSION[$SESSION_EXCEL_MESSAGE]; ?> </div>
-<div> <?php if (isset($_SESSION[$SESSION_UPLOAD_MESSAGE])) echo $_SESSION[$SESSION_UPLOAD_MESSAGE]; ?> </div>
-<div> <?php if (isset($_SESSION[$SESSION_DB_MESSAGE])) echo $_SESSION[$SESSION_DB_MESSAGE]; ?> </div>
-<div> <?php if (isset($_SESSION[$SESSION_MAIL_MESSAGE])) echo $_SESSION[$SESSION_MAIL_MESSAGE]; ?> </div>
 
-<?php
-$_SESSION[$SESSION_EXCEL_MESSAGE] = null;
-$_SESSION[$SESSION_UPLOAD_MESSAGE] = null;
-$_SESSION[$SESSION_DB_MESSAGE] = null;
-$_SESSION[$SESSION_MAIL_MESSAGE] = null;
-?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <span
+                class="label-info"> <?php if (isset($_SESSION[$SESSION_EXCEL_MESSAGE])) echo $_SESSION[$SESSION_EXCEL_MESSAGE]; ?> </span>
+            <span
+                class="label-info"> <?php if (isset($_SESSION[$SESSION_UPLOAD_MESSAGE])) echo $_SESSION[$SESSION_UPLOAD_MESSAGE]; ?> </span>
+            <span
+                class="label-info"> <?php if (isset($_SESSION[$SESSION_DB_MESSAGE])) echo $_SESSION[$SESSION_DB_MESSAGE]; ?> </span>
+            <span
+                class="label-info"> <?php if (isset($_SESSION[$SESSION_MAIL_MESSAGE])) echo $_SESSION[$SESSION_MAIL_MESSAGE]; ?> </span>
+        </div>
+    </div>
+</div>
