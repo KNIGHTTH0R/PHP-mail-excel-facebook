@@ -1,4 +1,4 @@
 <?php
 echo "hello world";
 ?>
-<a href="login.php">Login</a>
+<a href="/web/login.php">Login</a>
