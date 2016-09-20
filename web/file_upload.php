@@ -16,12 +16,6 @@ if (!isset($profile[$PROFILE_ID]) || !isset($profile[$PROFILE_EMAIL]) || !isset(
 
 $file_name = 'excel';
 if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
-
-    $_SESSION[$SESSION_EXCEL_MESSAGE] = null;
-    $_SESSION[$SESSION_UPLOAD_MESSAGE] = null;
-    $_SESSION[$SESSION_DB_MESSAGE] = null;
-    $_SESSION[$SESSION_MAIL_MESSAGE] = null;
-
     function sentMail($toMail, $attach, $profile)
     {
         $email = getenv('EMAIL');
@@ -174,3 +168,10 @@ if (isset($_FILES[$file_name]) && isset($_POST['email'])) {
 <div> <?php if (isset($_SESSION[$SESSION_UPLOAD_MESSAGE])) echo $_SESSION[$SESSION_UPLOAD_MESSAGE]; ?> </div>
 <div> <?php if (isset($_SESSION[$SESSION_DB_MESSAGE])) echo $_SESSION[$SESSION_DB_MESSAGE]; ?> </div>
 <div> <?php if (isset($_SESSION[$SESSION_MAIL_MESSAGE])) echo $_SESSION[$SESSION_MAIL_MESSAGE]; ?> </div>
+
+<?php
+$_SESSION[$SESSION_EXCEL_MESSAGE] = null;
+$_SESSION[$SESSION_UPLOAD_MESSAGE] = null;
+$_SESSION[$SESSION_DB_MESSAGE] = null;
+$_SESSION[$SESSION_MAIL_MESSAGE] = null;
+?>
