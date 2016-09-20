@@ -1,6 +1,7 @@
 {
   "require" : {
-    "facebook/graph-sdk": "^5.3"
+    "facebook/graph-sdk": "^5.3",
+    "phpmailer/phpmailer": "^5.2"
   },
   "require-dev": {
     "heroku/heroku-buildpack-php": "*"
