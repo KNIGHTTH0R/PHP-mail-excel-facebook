@@ -7,3 +7,4 @@ if ($db) {
 } else {
     $_SESSION[$SESSION_DB_MESSAGE] = 'Can\'t connect to database.';
 }
+header('Location ./');
