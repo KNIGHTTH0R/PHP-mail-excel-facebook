@@ -83,6 +83,10 @@ if (isset($accessToken)) {
 } else { ?>
     <div class="container">
         <h3>Not login yet!</h3>
+        <?php
+        $permissions = ['email']; // optional
+        $loginUrl = $helper->getLoginUrl('http://up-excel.herokuapp.com/index.php', $permissions);
+        ?>
         <a class="btn btn-primary" href="<?php echo $loginUrl; ?>">Log in with Facebook</a>
     </div>
 <?php } ?>
