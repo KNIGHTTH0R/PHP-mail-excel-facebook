@@ -1,2 +1,7 @@
 # PHP-mail-excel-facebook
-login with facebook, upload excel, read excel content, send to mail
+Example of:
+
+* login with facebook
+* uploading Excel file to server
+* reading Excel content
+* sending the content of Excel to specifi mail
